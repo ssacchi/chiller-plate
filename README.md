@@ -11,8 +11,9 @@ google analytics keys.
 
 ## Text
 Change the demo text, titles, and links in all `.html` files.
-Images can be changed by finding `<img src=""` and put 
 
+## Links
+Links can look like `href="#"`. turn the `#` into your link, like `href="https://www.google.com"`
 ## Images
 Images can be changed by finding `<img src=""` and putting 
 the path of the image file into the `src=""` quotes.
