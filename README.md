@@ -9,8 +9,6 @@ google analytics keys.
 
 `G_TRACKING_ID`
 
-`G_TRACKING_KEY`
-
 ## Text
 Change the demo text, titles, and links in all `.html` files.
 Images can be changed by finding `<img src=""` and put 
