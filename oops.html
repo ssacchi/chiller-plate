@@ -35,25 +35,28 @@
             <span>If you would not like to share your name, fill out the form with Chiller User as your first and last name.</span>
             <br>
             <div class="row">
-                <form class="col s12">
+                <form class="col s12" id="orderForm">
                     <div class="row">
                         <div class="input-field col s6">
                             <i class="material-icons prefix">account_circle</i>
-                            <input id="first_name" type="text" class="validate">
+                            <input id="first_name" type="text" name="first_name" class="validate">
                             <label for="first_name">First Name</label>
                         </div>
                         <div class="input-field col s6">
                             <i class="material-icons prefix">account_circle</i>
-                            <input id="last_name" type="tel" class="validate">
+                            <input id="last_name" type="tel" name="last_name" class="validate">
                             <label for="last_name">Last Name</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s12">
                             <i class="material-icons prefix">email</i>
-                            <input id="email" type="tel" class="validate">
-                            <label for="email">Last Name</label>
+                            <input id="email" type="tel" name="email" class="validate">
+                            <label for="email">Email</label>
                         </div>
+                    </div>
+                    <div class="row">
+                        <button class="btn waves-effect waves-light orange lighten-1" type="submit" name="action" id="submitButton">Submit<i class="material-icons right">send</i></button>
                     </div>
                 </form>
             </div>
@@ -112,8 +115,13 @@
 
 
 <!--  Scripts-->
-<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
 <script src="./js/materialize.js"></script>
+<script src="./js/serialize.js"></script>
+<script src="./js/form.js"></script>
 <script src="./js/init.js"></script>
 
 </body>
