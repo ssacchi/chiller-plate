@@ -1,9 +1,12 @@
+// original from: http://mashe.hawksey.info/2014/07/google-sheets-as-a-database-insert-with-apps-script-using-postget-methods-with-ajax-example/
+// original gist: https://gist.github.com/willpatera/ee41ae374d3c9839c2d6
+
 function doGet(e){
 	return handleResponse(e);
 }
 
 //  Enter sheet name where data is to be written below
-var SHEET_NAME = "Responses";
+var SHEET_NAME = "Sheet1";
 
 var SCRIPT_PROP = PropertiesService.getScriptProperties(); // new property service
 
@@ -16,32 +19,27 @@ function handleResponse(e) {
 	lock.waitLock(30000);  // wait 30 seconds before conceding defeat.
 
 	try {
-		var emailAddress = 'YOUR_EMAIL_HERE'; // First column
+		// next set where we write the data - you could write to multiple/alternate destinations
+		var doc = SpreadsheetApp.openById(SCRIPT_PROP.getProperty("key"));
+		var sheet = doc.getSheetByName(SHEET_NAME);
+
+		var emailAddress = 'morgandeanhi@gmail.com'; // First column
 		var subject = 'MVP NEW RESPONSE!';
 		var firstName = e.parameters.first_name;
 		var lastName = e.parameters.last_name;
 		var email = e.parameters.email;
 		var product = e.parameters.product;
-		var time = e.parameters.time;
+		var date = e.parameters.date;
 
-		var message = "New MVP Response:\n" +
-			"Name: " + firstName + " " + lastName + "\n" +
-			"Email: " + email + " \n" +
-			"Product Number: " + product + "\n" +
-			"Time: " + time;
+		var message = "New MVP Response:\n" + "Name: " + firstName + " " + lastName + "\n" + "Email: " + email + " \n" + "Product Number: " + product + "\n" + "Time: " + date;
 
 		MailApp.sendEmail(emailAddress, subject, message);
 
-		// next set where we write the data - you could write to multiple/alternate destinations
-		var doc = SpreadsheetApp.openById(SCRIPT_PROP.getProperty("key"));
-		var sheet = doc.getSheetByName(SHEET_NAME);
-
 		// we'll assume header is in row 1 but you can override with header_row in GET/POST data
 		var headRow = e.parameter.header_row || 1;
-		var headers = sheet.getRange(1, 1, 1, 8).getValues()[0];
+		var headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
 		var nextRow = sheet.getLastRow()+1; // get next row
 		var row = [];
-
 		// loop through the header columns
 		for (i in headers){
 			if (headers[i] == "Timestamp"){ // special case if you include a 'Timestamp' column
@@ -52,8 +50,6 @@ function handleResponse(e) {
 		}
 		// more efficient to set values as [][] array than individually
 		sheet.getRange(nextRow, 1, 1, row.length).setValues([row]);
-
-
 		// return json success results
 		return ContentService
 			.createTextOutput(JSON.stringify({"result":"success", "row": nextRow}))
